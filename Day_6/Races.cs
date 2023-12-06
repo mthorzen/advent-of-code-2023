@@ -3,17 +3,30 @@ namespace Day_6;
 public class Races : List<Race>
 {
     
-    public Races(List<string> lines)
+    public Races(List<string> lines, bool part2)
     {
-        var times = lines[0].Split(":")[1].Split(Array.Empty<char>(), StringSplitOptions.RemoveEmptyEntries);
-        var distances = lines[1].Split(":")[1].Split(Array.Empty<char>(), StringSplitOptions.RemoveEmptyEntries);
+        var times= Array.Empty<string>();
+        var distances = Array.Empty<string>();
+        if (part2)
+        {
+            var time = lines[0].Split(":")[1].Split(Array.Empty<char>(), StringSplitOptions.RemoveEmptyEntries).Aggregate((s, s1) => s+s1);
+            var distance = lines[1].Split(":")[1].Split(Array.Empty<char>(), StringSplitOptions.RemoveEmptyEntries).Aggregate((s, s1) => s+s1);
+            times = new[] { time };
+            distances = new[] { distance };
+        }
+        else
+        {
+            times = lines[0].Split(":")[1].Split(Array.Empty<char>(), StringSplitOptions.RemoveEmptyEntries);
+            distances = lines[1].Split(":")[1].Split(Array.Empty<char>(), StringSplitOptions.RemoveEmptyEntries);
+        }
+        
         
         for (var i = 0; i < times.Length; i++)
         {
             Add(new Race
             {
-                Time = int.Parse(times[i].Trim()),
-                Distance = int.Parse(distances[i].Trim())
+                Time = long.Parse(times[i].Trim()),
+                Distance = long.Parse(distances[i].Trim())
             });
         }
     }
