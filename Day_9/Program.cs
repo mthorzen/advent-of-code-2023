@@ -1,6 +1,7 @@
 ﻿using Tools;
 
 Console.WriteLine("---- START");
+bool part2 = true;
 
 var lines = FileReader.ReadLines("Input.txt");
 
@@ -19,9 +20,13 @@ bool CalcDiff(long[] numbers, out long[] output)
     return allZero;
 }
 
-long CalculateSum(string line)
+long CalculateSum(string line, bool part2)
 {
     var numbers = StringUtils.SplitStringToNum(line, " ");
+    if (part2)
+    {
+        numbers = numbers.Reverse().ToArray();        
+    }
     var done = false;
     var numberSeries = new List<long[]>();
     numberSeries.Add(numbers);
@@ -48,7 +53,7 @@ long sum = 0;
 for (var i = 0; i < lines.Count; i++)
 {
     var line = lines[i];
-    sum += CalculateSum(line);
+    sum += CalculateSum(line, part2);
 }
 
 Console.WriteLine("sum: " + sum);
