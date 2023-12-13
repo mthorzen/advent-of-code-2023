@@ -3,7 +3,7 @@
 public static class FileReader
 {
 
-    public static List<string> ReadLines(string filename)
+    public static List<string> ReadLines(string filename, bool excludeEmpty = true)
     {
         var list = new List<string>();
         var lines = File.ReadAllLines(filename);
@@ -11,7 +11,7 @@ public static class FileReader
 
         for (var i = 0; i < lines.Length; i += 1) {
             var line = lines[i];
-            if (!string.IsNullOrEmpty(line))
+            if (!excludeEmpty || !string.IsNullOrEmpty(line))
             {
                 list.Add(line.Trim());
             }
