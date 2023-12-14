@@ -9,4 +9,9 @@ public struct Point2D
     {
         return $"{x}, {y}";
     }
+
+    public static Point2D North(bool downUp = true)
+    {
+        return new Point2D() { x = 0, y = downUp ? 1 : -1 };
+    }
 }
