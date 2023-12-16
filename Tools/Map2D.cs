@@ -12,6 +12,22 @@ public class Map2D<T>
     public int Columns { get { return columns;  } }
     public int Rows { get { return rows;  } }
 
+    public delegate T CreateType(int col, int row);
+    public Map2D(int columns, int rows, CreateType createType)
+    {
+        this.columns = columns;
+        this.rows = rows;
+        map = new T[columns, rows];
+        for (var row = 0; row < rows; row++)
+        {
+            for (var col = 0; col < columns; col++)
+            {
+                map[col, row] = createType(col, row);
+            }
+        }
+        
+    }
+    
     public Map2D(List<string> lines, Dictionary<char, T> dict)
     {
         rows = lines.Count;
@@ -95,6 +111,21 @@ public class Map2D<T>
                 if (f.Equals('E')) c = '.';
                 if (f.Equals('C')) c = '#';
                 builder.Append(c + "");
+            }
+            builder.Append(Environment.NewLine);
+        }
+        return builder.ToString();
+    }
+    
+    public string ToString(Dictionary<T, char> dict)
+    {
+        var builder = new StringBuilder();
+        for (var row = 0; row < rows; row++)
+        {
+            for (var col = 0; col < columns; col++)
+            {
+                var foo = map[col, row];
+                builder.Append(dict[foo]);
             }
             builder.Append(Environment.NewLine);
         }
